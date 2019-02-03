@@ -5,6 +5,7 @@ Library for managing Wake-on-LAN packets. It supports:
 
 # Typical usage
 
+From string representation of MAC address and using defaults when broadcasting:
 ```rust
 extern crate wakey;
 let wol = wakey::WolPacket::from_string("01:02:03:04:05:06", ':');
