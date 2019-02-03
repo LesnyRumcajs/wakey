@@ -1,3 +1,14 @@
+//! Library for managing Wake-on-LAN packets.
+//! # Example
+//! ```
+//! extern crate wakey;
+//! let wol = wakey::WolPacket::from_string("01:02:03:04:05:06", ':');
+//! match wol.send_magic() {
+//!     Ok(_) => println!("Sent the magic packet!"),
+//!     Err(_) => println!("Failed to send the magic packet!")
+//! }
+//! ```
+
 extern crate hex;
 
 use std::iter;
