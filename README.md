@@ -1,4 +1,7 @@
 # Wakey
+[![Build Status](https://travis-ci.com/LesnyRumcajs/wakey.svg?branch=master)](https://travis-ci.com/LesnyRumcajs/wakey)
+[![Build Status](http://meritbadge.herokuapp.com/wakey)](https://crates.io/crates/wakey/)
+
 Library for managing Wake-on-LAN packets. It supports:
 * creating magic packets,
 * broadcasting them via UDP.
