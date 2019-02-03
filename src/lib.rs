@@ -112,7 +112,7 @@ mod tests {
         let extended_mac = super::WolPacket::extend_mac(&mac);
 
         assert_eq!(extended_mac.len(), super::MAC_PER_MAGIC * super::MAC_SIZE);
-        assert_eq!(&extended_mac[90..], &mac[..]);
+        assert_eq!(&extended_mac[(super::MAC_PER_MAGIC - 1) * super::MAC_SIZE..], &mac[..]);
     }
 
     #[test]
