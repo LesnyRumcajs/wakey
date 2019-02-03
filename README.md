@@ -8,6 +8,7 @@ Library for managing Wake-on-LAN packets. It supports:
 From string representation of MAC address and using defaults when broadcasting:
 ```rust
 extern crate wakey;
+
 let wol = wakey::WolPacket::from_string("01:02:03:04:05:06", ':');
 match wol.send_magic() {
     Ok(_) => println!("Sent the magic packet!"),
