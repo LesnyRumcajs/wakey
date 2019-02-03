@@ -3,7 +3,7 @@ Library for managing Wake-on-LAN packets. It supports:
 * creating magic packets,
 * broadcasting them via UDP.
 
-# Typical usage
+# Usage
 
 From string representation of MAC address and using defaults when broadcasting:
 ```rust
