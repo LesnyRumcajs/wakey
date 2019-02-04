@@ -16,6 +16,7 @@ use std::net::{SocketAddr, ToSocketAddrs, UdpSocket};
 
 const MAC_SIZE: usize = 6;
 const MAC_PER_MAGIC: usize = 16;
+static HEADER: [u8; 6] = [0xFF; 6];
 
 /// Wake-on-LAN packet
 pub struct WolPacket {
@@ -31,13 +32,7 @@ impl WolPacket {
     /// let wol = wakey::WolPacket::from_bytes(&vec![0x00, 0x01, 0x02, 0x03, 0x04, 0x05]);
     /// ```
     pub fn from_bytes(mac: &[u8]) -> WolPacket {
-        static HEADER: [u8; 6] = [0xFF; 6];
-        let mut packet = Vec::with_capacity(HEADER.len() + MAC_SIZE * MAC_PER_MAGIC);
-
-        packet.extend(HEADER.iter());
-        packet.extend(WolPacket::extend_mac(mac));
-
-        WolPacket { packet }
+        WolPacket { packet: WolPacket::create_packet_bytes(mac) }
     }
 
     /// Creates WOL packet from string MAC representation (e.x. 00:01:02:03:04:05)
@@ -101,6 +96,16 @@ impl WolPacket {
             .cloned()
             .collect()
     }
+
+    /// Creates bytes of the magic packet from MAC address
+    fn create_packet_bytes(mac: &[u8]) -> Vec<u8> {
+        let mut packet = Vec::with_capacity(HEADER.len() + MAC_SIZE * MAC_PER_MAGIC);
+
+        packet.extend(HEADER.iter());
+        packet.extend(WolPacket::extend_mac(mac));
+
+        packet
+    }
 }
 
 #[cfg(test)]
@@ -135,5 +140,13 @@ mod tests {
     fn mac_to_byte_invalid_separator_test() {
         let mac = "01002:03:04:05:06";
         super::WolPacket::mac_to_byte(mac, ':');
+    }
+
+    #[test]
+    fn create_packet_bytes_test() {
+        let bytes = super::WolPacket::create_packet_bytes(&[0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]);
+
+        assert_eq!(bytes.len(), super::MAC_SIZE * super::MAC_PER_MAGIC + super::HEADER.len());
+        assert!(bytes.iter().all(|&x| x == 0xFF));
     }
 }
