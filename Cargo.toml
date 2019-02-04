@@ -1,6 +1,6 @@
 [package]
 name = "wakey"
-version = "0.1.0"
+version = "0.1.1"
 
 authors = ["Hubert Bugaj<lesny.rumcajs@gmail.com>"]
 edition = "2018"
