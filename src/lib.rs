@@ -83,8 +83,7 @@ impl WolPacket {
     /// Panics when input MAC is invalid (i.e. contains non-byte characters)
     fn mac_to_byte(data: &str, sep: char) -> Vec<u8> {
         data.split(sep)
-            .map(|x| hex::decode(x).expect("Invalid mac!"))
-            .flatten()
+            .flat_map(|x| hex::decode(x).expect("Invalid mac!"))
             .collect()
     }
 
