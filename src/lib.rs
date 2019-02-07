@@ -41,6 +41,8 @@ impl WolPacket {
     /// extern crate wakey;
     /// let wol = wakey::WolPacket::from_string("00:01:02:03:04:05", ':');
     /// ```
+    /// # Panic
+    ///  Panics when input MAC is invalid (i.e. contains non-byte characters)
     pub fn from_string(data: &str, sep: char) -> WolPacket {
         WolPacket::from_bytes(&WolPacket::mac_to_byte(data, sep))
     }
@@ -80,6 +82,7 @@ impl WolPacket {
     }
 
     /// Converts string representation of MAC address (e.x. 00:01:02:03:04:05) to raw bytes.
+    /// # Panic
     /// Panics when input MAC is invalid (i.e. contains non-byte characters)
     fn mac_to_byte(data: &str, sep: char) -> Vec<u8> {
         data.split(sep)
