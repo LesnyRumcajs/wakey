@@ -9,8 +9,6 @@
 //! }
 //! ```
 
-extern crate hex;
-
 use std::iter;
 use std::net::{SocketAddr, ToSocketAddrs, UdpSocket};
 
