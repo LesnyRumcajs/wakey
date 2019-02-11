@@ -28,7 +28,9 @@ impl WolPacket {
     /// let wol = wakey::WolPacket::from_bytes(&vec![0x00, 0x01, 0x02, 0x03, 0x04, 0x05]);
     /// ```
     pub fn from_bytes(mac: &[u8]) -> WolPacket {
-        WolPacket { packet: WolPacket::create_packet_bytes(mac) }
+        WolPacket {
+            packet: WolPacket::create_packet_bytes(mac),
+        }
     }
 
     /// Creates WOL packet from string MAC representation (e.x. 00:01:02:03:04:05)
@@ -112,7 +114,10 @@ mod tests {
         let extended_mac = super::WolPacket::extend_mac(&mac);
 
         assert_eq!(extended_mac.len(), super::MAC_PER_MAGIC * super::MAC_SIZE);
-        assert_eq!(&extended_mac[(super::MAC_PER_MAGIC - 1) * super::MAC_SIZE..], &mac[..]);
+        assert_eq!(
+            &extended_mac[(super::MAC_PER_MAGIC - 1) * super::MAC_SIZE..],
+            &mac[..]
+        );
     }
 
     #[test]
@@ -141,7 +146,10 @@ mod tests {
     fn create_packet_bytes_test() {
         let bytes = super::WolPacket::create_packet_bytes(&[0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]);
 
-        assert_eq!(bytes.len(), super::MAC_SIZE * super::MAC_PER_MAGIC + super::HEADER.len());
+        assert_eq!(
+            bytes.len(),
+            super::MAC_SIZE * super::MAC_PER_MAGIC + super::HEADER.len()
+        );
         assert!(bytes.iter().all(|&x| x == 0xFF));
     }
 }
