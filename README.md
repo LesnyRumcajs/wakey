@@ -11,8 +11,6 @@ Library for managing Wake-on-LAN packets. It supports:
 
 From string representation of MAC address and using defaults when broadcasting:
 ```rust
-extern crate wakey;
-
 let wol = wakey::WolPacket::from_string("01:02:03:04:05:06", ':');
 match wol.send_magic() {
     Ok(_) => println!("Sent the magic packet!"),
@@ -22,7 +20,6 @@ match wol.send_magic() {
 
 Packets can also be constructed with raw bytes and sent from / to custom addresses:
 ```rust
-extern crate wakey;
 use std::net::SocketAddr;
 
 let wol = wakey::WolPacket::from_bytes(&vec![0x00, 0x01, 0x02, 0x03, 0x04, 0x05]);
