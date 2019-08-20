@@ -13,4 +13,4 @@ keywords = ["wol", "wake-on-lan"]
 categories = ["network-programming"]
 
 [dependencies]
-hex = "0.3.2"
+hex = "*"
