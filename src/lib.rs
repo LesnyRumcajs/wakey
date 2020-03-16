@@ -2,9 +2,10 @@
 //! # Example
 //! ```
 //! let wol = wakey::WolPacket::from_string("01:02:03:04:05:06", ':');
-//! match wol.send_magic() {
-//!     Ok(_) => println!("Sent the magic packet!"),
-//!     Err(_) => println!("Failed to send the magic packet!")
+//! if wol.send_magic().is_ok() {
+//!     println!("Sent the magic packet!");
+//! } else {
+//!     println!("Failed to send the magic packet!");
 //! }
 //! ```
 
