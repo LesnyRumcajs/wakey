@@ -10,12 +10,7 @@ struct CmdArgs {
 fn main() {
     let args = CmdArgs::parse();
     if let Some(m) = args.mac {
-        let mut sep: char = '/';
-        [":", "-"].iter().for_each(|s| {
-            if m.contains(s) {
-                sep = s.chars().next().unwrap();
-            }
-        });
+        let sep = m.chars().find(|ch| *ch  == ':' || *ch == '-').unwrap_or('/');
         let wol = wakey::WolPacket::from_string(&m, sep);
         if wol.send_magic().is_ok() {
             println!("sent the magic packet.");
