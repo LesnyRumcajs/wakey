@@ -1,6 +1,6 @@
 # Wakey
 [![Rust](https://github.com/LesnyRumcajs/wakey/actions/workflows/rust.yml/badge.svg)](https://github.com/LesnyRumcajs/wakey/actions/workflows/rust.yml)
-[![Build Status](http://meritbadge.herokuapp.com/wakey)](https://crates.io/crates/wakey/)
+[![Crates.io](https://img.shields.io/crates/v/wakey.svg)](https://crates.io/crates/wakey)
 [![docs.rs](https://img.shields.io/badge/api-rustdoc-blue.svg)](https://docs.rs/wakey)
 
 Library for managing Wake-on-LAN packets. It supports:
