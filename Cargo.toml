@@ -1,9 +1,9 @@
 [package]
 name = "wakey"
-version = "0.1.2"
+version = "0.2.0"
 
 authors = ["Hubert Bugaj<lesny.rumcajs@gmail.com>"]
-edition = "2018"
+edition = "2021"
 
 license = "MIT"
 repository = "https://github.com/LesnyRumcajs/wakey"
