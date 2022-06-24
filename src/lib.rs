@@ -12,14 +12,20 @@
 use std::iter;
 use std::net::{SocketAddr, ToSocketAddrs, UdpSocket};
 
+use arrayvec::ArrayVec;
+
 const MAC_SIZE: usize = 6;
 const MAC_PER_MAGIC: usize = 16;
-static HEADER: [u8; 6] = [0xFF; 6];
+const HEADER: [u8; 6] = [0xFF; 6];
+const PACKET_LEN: usize = HEADER.len() + MAC_SIZE * MAC_PER_MAGIC;
+
+type Packet = ArrayVec<u8, PACKET_LEN>;
 
 /// Wake-on-LAN packet
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct WolPacket {
     /// WOL packet bytes
-    packet: Vec<u8>,
+    packet: Packet,
 }
 
 impl WolPacket {
@@ -80,27 +86,38 @@ impl WolPacket {
     /// Converts string representation of MAC address (e.x. 00:01:02:03:04:05) to raw bytes.
     /// # Panic
     /// Panics when input MAC is invalid (i.e. contains non-byte characters)
-    fn mac_to_byte(data: &str, sep: char) -> Vec<u8> {
-        data.split(sep)
+    fn mac_to_byte(data: &str, sep: char) -> ArrayVec<u8, MAC_SIZE> {
+        let bytes = data
+            .split(sep)
             .flat_map(|x| hex::decode(x).expect("Invalid mac!"))
-            .collect()
+            .collect::<ArrayVec<u8, MAC_SIZE>>();
+
+        debug_assert_eq!(MAC_SIZE, bytes.len());
+
+        bytes
     }
 
     /// Extends the MAC address to fill the magic packet
-    fn extend_mac(mac: &[u8]) -> Vec<u8> {
-        iter::repeat(mac)
+    fn extend_mac(mac: &[u8]) -> ArrayVec<u8, { MAC_SIZE * MAC_PER_MAGIC }> {
+        let magic = iter::repeat(mac)
             .take(MAC_PER_MAGIC)
             .flatten()
-            .cloned()
-            .collect()
+            .copied()
+            .collect::<ArrayVec<u8, { MAC_SIZE * MAC_PER_MAGIC }>>();
+
+        debug_assert_eq!(MAC_SIZE * MAC_PER_MAGIC, magic.len());
+
+        magic
     }
 
     /// Creates bytes of the magic packet from MAC address
-    fn create_packet_bytes(mac: &[u8]) -> Vec<u8> {
-        let mut packet = Vec::with_capacity(HEADER.len() + MAC_SIZE * MAC_PER_MAGIC);
+    fn create_packet_bytes(mac: &[u8]) -> Packet {
+        let mut packet = Packet::new();
 
-        packet.extend(HEADER.iter());
+        packet.extend(HEADER);
         packet.extend(WolPacket::extend_mac(mac));
+
+        debug_assert_eq!(PACKET_LEN, packet.len());
 
         packet
     }
@@ -122,11 +139,28 @@ mod tests {
     }
 
     #[test]
+    #[should_panic]
+    fn extend_mac_mac_too_long_test() {
+        let mac = vec![0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07];
+        super::WolPacket::extend_mac(&mac);
+    }
+
+    #[test]
+    #[should_panic]
+    fn extend_mac_mac_too_short_test() {
+        let mac = vec![0x01, 0x02, 0x03, 0x04, 0x05];
+        super::WolPacket::extend_mac(&mac);
+    }
+
+    #[test]
     fn mac_to_byte_test() {
         let mac = "01:02:03:04:05:06";
         let result = super::WolPacket::mac_to_byte(mac, ':');
 
-        assert_eq!(result, vec![0x01, 0x02, 0x03, 0x04, 0x05, 0x06]);
+        assert_eq!(
+            result.into_inner().unwrap(),
+            [0x01, 0x02, 0x03, 0x04, 0x05, 0x06]
+        );
     }
 
     #[test]
@@ -140,6 +174,20 @@ mod tests {
     #[should_panic]
     fn mac_to_byte_invalid_separator_test() {
         let mac = "01002:03:04:05:06";
+        super::WolPacket::mac_to_byte(mac, ':');
+    }
+
+    #[test]
+    #[should_panic]
+    fn mac_to_byte_mac_too_long_test() {
+        let mac = "01:02:03:04:05:06:07";
+        super::WolPacket::mac_to_byte(mac, ':');
+    }
+
+    #[test]
+    #[should_panic]
+    fn mac_to_byte_mac_too_short_test() {
+        let mac = "01:02:03:04:05";
         super::WolPacket::mac_to_byte(mac, ':');
     }
 
