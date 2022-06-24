@@ -136,33 +136,30 @@ mod tests {
     fn extend_mac_test() {
         let mac = vec![0x01, 0x02, 0x03, 0x04, 0x05, 0x06];
 
-        let extended_mac = super::WolPacket::extend_mac(&mac);
+        let extended_mac = WolPacket::extend_mac(&mac);
 
-        assert_eq!(extended_mac.len(), super::MAC_PER_MAGIC * super::MAC_SIZE);
-        assert_eq!(
-            &extended_mac[(super::MAC_PER_MAGIC - 1) * super::MAC_SIZE..],
-            &mac[..]
-        );
+        assert_eq!(extended_mac.len(), MAC_PER_MAGIC * MAC_SIZE);
+        assert_eq!(&extended_mac[(MAC_PER_MAGIC - 1) * MAC_SIZE..], &mac[..]);
     }
 
     #[test]
     #[should_panic]
     fn extend_mac_mac_too_long_test() {
         let mac = vec![0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07];
-        super::WolPacket::extend_mac(&mac);
+        WolPacket::extend_mac(&mac);
     }
 
     #[test]
     #[should_panic]
     fn extend_mac_mac_too_short_test() {
         let mac = vec![0x01, 0x02, 0x03, 0x04, 0x05];
-        super::WolPacket::extend_mac(&mac);
+        WolPacket::extend_mac(&mac);
     }
 
     #[test]
     fn mac_to_byte_test() {
         let mac = "01:02:03:04:05:06";
-        let result = super::WolPacket::mac_to_byte(mac, ':');
+        let result = WolPacket::mac_to_byte(mac, ':');
 
         assert_eq!(
             result.into_inner().unwrap(),
@@ -174,45 +171,42 @@ mod tests {
     #[should_panic]
     fn mac_to_byte_invalid_chars_test() {
         let mac = "ZZ:02:03:04:05:06";
-        super::WolPacket::mac_to_byte(mac, ':');
+        WolPacket::mac_to_byte(mac, ':');
     }
 
     #[test]
     #[should_panic]
     fn mac_to_byte_invalid_separator_test() {
         let mac = "01002:03:04:05:06";
-        super::WolPacket::mac_to_byte(mac, ':');
+        WolPacket::mac_to_byte(mac, ':');
     }
 
     #[test]
     #[should_panic]
     fn mac_to_byte_mac_too_long_test() {
         let mac = "01:02:03:04:05:06:07";
-        super::WolPacket::mac_to_byte(mac, ':');
+        WolPacket::mac_to_byte(mac, ':');
     }
 
     #[test]
     #[should_panic]
     fn mac_to_byte_mac_too_short_test() {
         let mac = "01:02:03:04:05";
-        super::WolPacket::mac_to_byte(mac, ':');
+        WolPacket::mac_to_byte(mac, ':');
     }
 
     #[test]
     fn create_packet_bytes_test() {
-        let bytes = super::WolPacket::create_packet_bytes(&[0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]);
+        let bytes = WolPacket::create_packet_bytes(&[0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]);
 
-        assert_eq!(
-            bytes.len(),
-            super::MAC_SIZE * super::MAC_PER_MAGIC + super::HEADER.len()
-        );
+        assert_eq!(bytes.len(), MAC_SIZE * MAC_PER_MAGIC + HEADER.len());
         assert!(bytes.iter().all(|&x| x == 0xFF));
     }
 
     #[test]
     fn create_wol_packet() {
         let mac = vec![0x00, 0x01, 0x02, 0x03, 0x04, 0x05];
-        let wol = super::WolPacket::from_bytes(&mac);
+        let wol = WolPacket::from_bytes(&mac);
         let packet = wol.into_inner();
 
         assert_eq!(packet.len(), PACKET_LEN);
