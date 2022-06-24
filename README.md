@@ -23,7 +23,7 @@ Packets can also be constructed with raw bytes and sent from / to custom address
 ```rust
 use std::net::SocketAddr;
 
-let wol = wakey::WolPacket::from_bytes(&vec![0x00, 0x01, 0x02, 0x03, 0x04, 0x05]);
+let wol = wakey::WolPacket::from_bytes(&[0x00, 0x01, 0x02, 0x03, 0x04, 0x05]);
 let src = SocketAddr::from(([0,0,0,0], 0));
 let dst = SocketAddr::from(([255,255,255,255], 9));
 
