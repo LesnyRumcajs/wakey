@@ -1,5 +1,5 @@
 # Wakey
-[![Build Status](https://travis-ci.com/LesnyRumcajs/wakey.svg?branch=master)](https://travis-ci.com/LesnyRumcajs/wakey)
+[![Rust](https://github.com/LesnyRumcajs/wakey/actions/workflows/rust.yml/badge.svg)](https://github.com/LesnyRumcajs/wakey/actions/workflows/rust.yml)
 [![Build Status](http://meritbadge.herokuapp.com/wakey)](https://crates.io/crates/wakey/)
 [![docs.rs](https://img.shields.io/badge/api-rustdoc-blue.svg)](https://docs.rs/wakey)
 
