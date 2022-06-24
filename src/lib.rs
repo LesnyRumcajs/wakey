@@ -83,6 +83,11 @@ impl WolPacket {
         Ok(())
     }
 
+    /// Returns the underlying WoL packet bytes
+    pub fn into_inner(self) -> Packet {
+        self.packet
+    }
+
     /// Converts string representation of MAC address (e.x. 00:01:02:03:04:05) to raw bytes.
     /// # Panic
     /// Panics when input MAC is invalid (i.e. contains non-byte characters)
@@ -125,6 +130,8 @@ impl WolPacket {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn extend_mac_test() {
         let mac = vec![0x01, 0x02, 0x03, 0x04, 0x05, 0x06];
@@ -200,5 +207,21 @@ mod tests {
             super::MAC_SIZE * super::MAC_PER_MAGIC + super::HEADER.len()
         );
         assert!(bytes.iter().all(|&x| x == 0xFF));
+    }
+
+    #[test]
+    fn create_wol_packet() {
+        let mac = vec![0x00, 0x01, 0x02, 0x03, 0x04, 0x05];
+        let wol = super::WolPacket::from_bytes(&mac);
+        let packet = wol.into_inner();
+
+        assert_eq!(packet.len(), PACKET_LEN);
+        assert_eq!(
+            [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF],
+            &packet[0..HEADER.len()]
+        );
+        for offset in (HEADER.len()..PACKET_LEN).step_by(MAC_SIZE) {
+            assert_eq!(&mac, &packet[offset..offset + MAC_SIZE]);
+        }
     }
 }
