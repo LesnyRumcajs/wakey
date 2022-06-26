@@ -1,0 +1,17 @@
+[package]
+name = "wakey-wake"
+version = "0.2.1"
+
+authors = ["Hubert Bugaj<lesny.rumcajs@gmail.com>"]
+edition = "2021"
+
+license = "MIT"
+repository = "https://github.com/LesnyRumcajs/wakey"
+
+description = "Sample CLI tool for creating and sending Wake-on-LAN packets."
+keywords = ["wol", "wake-on-lan"]
+categories = ["network-programming"]
+
+[dependencies]
+wakey = { path = "../wakey" }
+clap = { version = "3.1.18", features = ["derive"] }
