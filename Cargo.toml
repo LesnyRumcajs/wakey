@@ -1,18 +1,5 @@
-[package]
-name = "wakey"
-version = "0.2.1"
-
-authors = ["Hubert Bugaj<lesny.rumcajs@gmail.com>"]
-edition = "2021"
-
-license = "MIT"
-repository = "https://github.com/LesnyRumcajs/wakey"
-
-description = "Wake-on-LAN library for creating and sending magic WOL packets."
-keywords = ["wol", "wake-on-lan"]
-categories = ["network-programming"]
-
-[dependencies]
-hex = "~0.3"
-arrayvec = "0.7.2"
-clap = { version = "3.1.18", features = ["derive"] }
+[workspace]
+members = [
+  "wakey",
+  "wakey-wake"
+]

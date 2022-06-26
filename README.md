@@ -32,8 +32,6 @@ wol.send_magic_to(src, dst);
 
 ## Included binary
 
-The binary `bin/wake` may be directly used in scripts:
-
 ```
-wake -m 00:11:22:33:44:55
+cargo run --bin wakey-wake -m 00:11:22:33:44:55
 ```
