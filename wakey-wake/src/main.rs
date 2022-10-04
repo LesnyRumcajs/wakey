@@ -7,11 +7,12 @@ struct CmdArgs {
     #[clap(short, long)]
     mac: Option<String>,
 }
-fn main() {
+
+fn main() -> wakey::Result<()> {
     let args = CmdArgs::parse();
     if let Some(m) = args.mac {
         let sep = m.chars().find(|ch| *ch == ':' || *ch == '-').unwrap_or('/');
-        let wol = wakey::WolPacket::from_string(&m, sep);
+        let wol = wakey::WolPacket::from_string(&m, sep)?;
         if wol.send_magic().is_ok() {
             println!("sent the magic packet.");
         } else {
@@ -20,4 +21,6 @@ fn main() {
     } else {
         println!("give mac address to wake up");
     }
+
+    Ok(())
 }
