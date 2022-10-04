@@ -229,7 +229,7 @@ mod tests {
         let mac = "01002:03:04:05:06";
         assert!(matches!(
             WolPacket::mac_to_byte(mac, ':'),
-            Err(WakeyError::InvalidMacLength)
+            Err(WakeyError::InvalidMacFormat)
         ));
     }
 
