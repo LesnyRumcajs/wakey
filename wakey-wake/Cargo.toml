@@ -14,4 +14,4 @@ categories = ["network-programming"]
 
 [dependencies]
 wakey = { path = "../wakey" }
-clap = { version = "3.1.18", features = ["derive"] }
+clap = { version = "4.0.15", features = ["derive"] }
