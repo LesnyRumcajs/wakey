@@ -1,6 +1,6 @@
 [package]
 name = "wakey-wake"
-version = "0.2.2"
+version = "0.3.0"
 
 authors = ["Hubert Bugaj<lesny.rumcajs@gmail.com>"]
 edition = "2021"
@@ -14,4 +14,4 @@ categories = ["network-programming"]
 
 [dependencies]
 wakey = { path = "../wakey" }
-clap = { version = "4.0.15", features = ["derive"] }
+clap = { version = "4.0", features = ["derive"] }
