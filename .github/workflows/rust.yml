@@ -25,7 +25,7 @@ jobs:
           toolchain: stable
           profile: minimal
       - name: Rust Cache
-        uses: Swatinem/rust-cache@v2.7.1
+        uses: Swatinem/rust-cache@v2.7.3
       - name: Run tests
         run: cargo test --verbose
 
@@ -50,7 +50,7 @@ jobs:
       - name: Install RustFmt
         run: rustup component add rustfmt
       - name: Rust Cache
-        uses: Swatinem/rust-cache@v2.7.1
+        uses: Swatinem/rust-cache@v2.7.3
       - name: Run format check
         run: cargo fmt --all --check
       - name: Run clippy
@@ -70,7 +70,7 @@ jobs:
       - name: Install Audit
         run: cargo install cargo-audit
       - name: Rust Cache
-        uses: Swatinem/rust-cache@v2.7.1
+        uses: Swatinem/rust-cache@v2.7.3
       - name: Run Audit
         uses: actions-rs/cargo@v1
         with:
@@ -95,7 +95,7 @@ jobs:
         with:
           toolchain: ${{ matrix.rv }}
       - name: Rust Cache
-        uses: Swatinem/rust-cache@v2.7.1
+        uses: Swatinem/rust-cache@v2.7.3
       - name: Cargo Build
         uses: actions-rs/cargo@v1
         with:
