@@ -120,6 +120,7 @@ impl WolPacket {
     }
 
     /// Returns the underlying WoL packet bytes
+    #[must_use]
     pub fn into_inner(self) -> Packet {
         self.packet
     }

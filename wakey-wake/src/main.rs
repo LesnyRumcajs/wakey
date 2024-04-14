@@ -16,7 +16,7 @@ fn main() -> wakey::Result<()> {
         .expect("Invalid MAC address format. Please use one of the separators: [:, -, /]");
     let wol = wakey::WolPacket::from_string(&mac_adress, sep)?;
     if wol.send_magic().is_ok() {
-        println!("Sent the magic packet.");
+        println!("Sent the magic packet to {mac_adress}");
     } else {
         println!("Failed to send the magic packet.");
     }
