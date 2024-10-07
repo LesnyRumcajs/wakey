@@ -1,0 +1,35 @@
+name: Code coverage
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: "${{ github.ref != 'refs/heads/main' }}"
+"on":
+  workflow_dispatch:
+  merge_group:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  codedov:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: taiki-e/install-action@cargo-llvm-cov
+      - run: cargo llvm-cov --all-features --lcov --output-path lcov.info
+        env:
+          RUSTC_WRAPPER:
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lcov.info
+          path: lcov.info
+          if-no-files-found: error
+      - name: Upload to codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: |
+          curl -Os https://uploader.codecov.io/latest/linux/codecov
+          chmod +x codecov
+          ./codecov -f lcov.info -Z
