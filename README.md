@@ -2,6 +2,7 @@
 [![Rust](https://github.com/LesnyRumcajs/wakey/actions/workflows/rust.yml/badge.svg)](https://github.com/LesnyRumcajs/wakey/actions/workflows/rust.yml)
 [![Crates.io](https://img.shields.io/crates/v/wakey.svg)](https://crates.io/crates/wakey)
 [![docs.rs](https://img.shields.io/badge/api-rustdoc-blue.svg)](https://docs.rs/wakey)
+[![codecov](https://codecov.io/github/LesnyRumcajs/wakey/graph/badge.svg?token=PXR2yHWzvJ)](https://codecov.io/github/LesnyRumcajs/wakey)
 
 Library for managing Wake-on-LAN packets. It supports:
 * creating magic packets,
