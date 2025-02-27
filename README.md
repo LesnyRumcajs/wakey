@@ -4,7 +4,7 @@
 [![docs.rs](https://img.shields.io/badge/api-rustdoc-blue.svg)](https://docs.rs/wakey)
 [![codecov](https://codecov.io/github/LesnyRumcajs/wakey/graph/badge.svg?token=PXR2yHWzvJ)](https://codecov.io/github/LesnyRumcajs/wakey)
 
-Library for managing Wake-on-LAN packets. It supports:
+Library for managing [Wake-on-LAN packets](https://en.wikipedia.org/wiki/Wake-on-LAN). It supports:
 * creating magic packets,
 * broadcasting them via UDP.
 
