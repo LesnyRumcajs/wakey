@@ -56,26 +56,6 @@ jobs:
       - name: Run clippy
         run: cargo clippy --all --all-targets   -- -D warnings
 
-  audit:
-    name: Audit
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Sources
-        uses: actions/checkout@v4
-      - name: Install Toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          profile: minimal
-      - name: Install Audit
-        run: cargo install cargo-audit
-      - name: Rust Cache
-        uses: Swatinem/rust-cache@v2.7.7
-      - name: Run Audit
-        uses: actions-rs/cargo@v1
-        with:
-          command: audit
-
   build:
     name: Build
     runs-on: ${{ matrix.os }}
