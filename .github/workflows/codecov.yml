@@ -21,7 +21,7 @@ jobs:
       - run: cargo llvm-cov --all-features --lcov --output-path lcov.info
         env:
           RUSTC_WRAPPER:
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: lcov.info
           path: lcov.info
