@@ -150,8 +150,7 @@ impl WolPacket {
 
     /// Extends the MAC address to fill the magic packet
     fn extend_mac(mac: &[u8]) -> ArrayVec<u8, { MAC_SIZE * MAC_PER_MAGIC }> {
-        let magic = iter::repeat(mac)
-            .take(MAC_PER_MAGIC)
+        let magic = iter::repeat_n(mac, MAC_PER_MAGIC)
             .flatten()
             .copied()
             .collect::<ArrayVec<u8, { MAC_SIZE * MAC_PER_MAGIC }>>();
