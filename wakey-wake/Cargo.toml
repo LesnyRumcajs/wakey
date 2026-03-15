@@ -15,3 +15,6 @@ categories = ["network-programming"]
 [dependencies]
 wakey = { path = "../wakey" }
 clap = { version = "4.0", features = ["derive"] }
+
+[profile.release]
+strip = true
